@@ -1,5 +1,5 @@
 [project]
-name = "proyecto"
+name = "sistemas_distribuidos_cloud"
 version = "0.1.0"
 description = ""
 readme = "README.md"
@@ -14,3 +14,8 @@ dependencies = [
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+packages = [
+    { include = "src" }
+]
