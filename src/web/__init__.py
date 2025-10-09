@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, render_template
 from src import config
 from src.core.database import db, reset
 from src.core import seed_data
-from src.core.user.model import User
+from src.web.controllers.login import bp_login
 
 # Creación de la app principal.
 def create_app(env="development") -> Flask:
@@ -18,9 +18,12 @@ def create_app(env="development") -> Flask:
     def seed_basic():
         seed_data.run()
 
+    # Registro de blueprints.
+    app.register_blueprint(bp_login)
+
     # Renderización del home.
     @app.route("/")
     def home():
-        return "Backend ejecutando correctamente ✅."
+        return render_template("layout.html")
     
     return app
