@@ -41,6 +41,10 @@
     <div class="card-body p-4">
       <h3 class="card-title text-center mb-4">Iniciar Sesión</h3>
 
+      {% if error %}
+      <div class="alert alert-danger text-center">{{ error }}</div>
+      {% endif %}
+
       <form method="POST" action="{{ url_for('login.login') }}">
         <div class="mb-3">
           <label for="email" class="form-label">Correo electrónico</label>

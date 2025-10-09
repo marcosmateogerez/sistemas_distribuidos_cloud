@@ -11,7 +11,6 @@ def create_app(env="development") -> Flask:
     # Seteo de configuración.
     app.config.from_object(config.config[env])
     db.init_app(app)
-    reset(app)
 
     # Comando para crear las tablas principales.
     @app.cli.command(name="seed-data")
