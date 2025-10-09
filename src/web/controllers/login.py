@@ -1,9 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
-from werkzeug.security import check_password_hash
+from src.core.user.services import get_user_by_email, verify_user_password
 import jwt
 from datetime import datetime, timedelta
-from src.core.database import db
-from src.core.user.model import User
 from flask import current_app as app
 
 bp_login = Blueprint("login", __name__, url_prefix="/acceso")
@@ -21,30 +19,27 @@ def authenticate():
     Valida los datos recibidos para confirmar el acceso al sitio o no, y genera el token JWT.
     """
 
+    # Obtiene los datos del formulario.
     data = request.form
     email = data.get("email")
     password = data.get("password")
 
-    # Buscar usuario
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return render_template("login/login.html", error="Usuario no encontrado")
+    # Verifica si el usuario existe y si la contraseña es correcta.
+    user = get_user_by_email(email)
+    if not user or not verify_user_password(user, password):
+        return render_template("login/login.html", error="Usuario o contraseña incorrectos")
 
-    # Verificar contraseña
-    if not check_password_hash(user.password, password):
-        return render_template("login/login.html", error="Contraseña incorrecta")
-
-    # Crear JWT
+    # Creación del token JWT.
     token = jwt.encode(
         {
             "user_id": user.id,
-            "exp": datetime.utcnow() + timedelta(hours=1)  # Expira en 1 hora
+            "exp": datetime.utcnow() + timedelta(hours=1)
         },
         app.config["SECRET_KEY"],
         algorithm="HS256"
     )
 
-    # Podés enviarlo como JSON, o guardarlo en cookie
+    # Almacenamiento del token JWT en la cookie.
     response = jsonify({"token": token})
     response.set_cookie("access_token", token, httponly=True)
     return render_template("layout.html")
