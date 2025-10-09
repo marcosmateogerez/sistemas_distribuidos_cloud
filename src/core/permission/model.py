@@ -7,7 +7,7 @@ class Permission(db.Model):
     """
     __tablename__ = "permission"
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(120), unique=True, nullable=False)
+    name = db.Column(db.String(120), unique=True, nullable=False)
     
     # Relación entre rol y permiso.
     roles = db.relationship("Role", secondary=role_permission, back_populates="permissions")
