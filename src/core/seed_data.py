@@ -1,6 +1,8 @@
 from src.core.database import db
 from src.core.role.model import Role
 from src.core.permission.model import Permission
+from src.core.user.model import User
+from werkzeug.security import generate_password_hash
 
 def run():
     """
@@ -38,6 +40,27 @@ def run():
     rol_consejo.permissions.extend([
         permiso_consejo_index
     ])
+
+    # Guardo los cambios para que se le asigne un id a los roles y poder usarlo luego.
+    db.session.commit()
+
+    # Creación de usuario con el rol ong.
+    user_ong = User(
+        email="ong@projectplanning.org",
+        password=generate_password_hash("ong123"),
+        role_id=rol_ong.id
+    )
+
+    # Creación de usuario con el rol consejo directivo.
+    user_consejo = User(
+        email="consejo@projectplanning.org",
+        password=generate_password_hash("consejo123"),
+        role_id=rol_consejo.id
+    )
+
+    # Agregar usuarios a la sesión.
+    db.session.add(user_ong)
+    db.session.add(user_consejo)
 
     # Almacenamiento de las tablas en la base de datos.
     db.session.commit()
