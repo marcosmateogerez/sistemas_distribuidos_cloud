@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from src import config
-from src.core.database import db, reset
+from src.core.database import db, reset, init_app
 from src.core import seed_data
 from src.web.controllers.login import bp_login
 
@@ -17,6 +17,10 @@ def create_app(env="development") -> Flask:
     def seed_basic():
         seed_data.run()
 
+    @app.cli.command(name="reset-db")
+    def reset_db():
+        reset(app)
+    
     # Registro de blueprints.
     app.register_blueprint(bp_login)
 

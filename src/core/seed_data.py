@@ -2,6 +2,8 @@ from src.core.database import db
 from src.core.role.model import Role
 from src.core.permission.model import Permission
 from src.core.user.model import User
+from src.core.stage.model import Stage, CoverageRequest
+from src.core.observation.model import Observation, Status
 from werkzeug.security import generate_password_hash
 
 def run():
@@ -62,6 +64,26 @@ def run():
     db.session.add(user_ong)
     db.session.add(user_consejo)
 
+    #Creación de una stage de ejemplo
+    stage_example = Stage(
+        id_project=1,
+        name="Etapa de ejemplo",
+        description="Esta es una etapa de ejemplo para un proyecto.",
+        start_date="2023-10-01 00:00:00",
+        end_date="2023-12-31 23:59:59",
+        coverage_request=CoverageRequest.DINERO
+    )
+    
+    # Agregar observación a la sesión.
+    observation_example = Observation(
+        id_project=1,
+        name="Observación de ejemplo",
+        description="Esta es una observación de ejemplo para un proyecto.",
+        status=Status.PENDING
+    )
+    
+    db.session.add(stage_example)
+    
     # Almacenamiento de las tablas en la base de datos.
     db.session.commit()
     print("Tablas creadas correctamente ✅.")
