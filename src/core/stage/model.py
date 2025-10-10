@@ -24,3 +24,14 @@ class Stage(db.Model):
     end_date = db.Column(db.DateTime, nullable=True)
     coverage_request = db.Column(Enum(CoverageRequest), nullable=False)
     
+    
+    def to_dict(self):
+           return {
+                "id": self.id,
+                "id_project": self.id_project,
+                "name": self.name,
+                "description": self.description,
+                "start_date": self.start_date.isoformat() if self.start_date else None,
+                "end_date": self.end_date.isoformat() if self.end_date else None,
+                "coverage_request": self.coverage_request.name if self.coverage_request else None,
+            }

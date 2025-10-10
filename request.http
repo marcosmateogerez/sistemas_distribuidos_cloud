@@ -1,0 +1,2 @@
+GET http://localhost:5000/stages/v1/get_available_stages/1
+Accept: application/json
