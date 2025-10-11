@@ -39,3 +39,17 @@ def finish_stage_by_id(stage_id: int):
     if result: 
         return jsonify({"message": f"La etapa con ID {stage_id} ha sido finalizada exitosamente."}), 200
     return jsonify({"message": f"No se pudo finalizar la etapa con ID {stage_id}. Es posible que no este pendiente o que ya haya finalizado."}), 400
+
+
+@bp.post("v1/create_stage")
+def create_stage():
+    """
+    Endpoint para crear una nueva etapa recibiendo los datos en formato JSON.
+    """
+    try:
+        data = request.get_json()
+        new_stage = stage_service.create_stage(data)
+        if(new_stage):    
+            return jsonify({"message": "Etapa creada exitosamente.", "stage": new_stage.to_dict()}), 201
+    except Exception as e:
+        return jsonify({"message": "Error al crear la etapa.", "error": str(e)}), 400

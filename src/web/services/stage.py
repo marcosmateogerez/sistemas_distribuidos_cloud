@@ -1,6 +1,8 @@
 from flask import jsonify
 from src.core import stage as stage_functions
 from src.core.stage.model import status as status_stage
+from src.core.stage.model import Stage
+from src.core.stage.model import CoverageRequest
 from src.core.database import db
 
 
@@ -29,6 +31,8 @@ def cover_stage(stage_id: int):
             return True
     return False
 
+
+
 def finish_stage(stage_id: int):
     """
     funcion para finalizar una etapa específica según su ID.
@@ -40,3 +44,25 @@ def finish_stage(stage_id: int):
             stage_functions.set_stage_as_finished(stage_id)
             return True
     return False
+
+
+def create_stage(data: dict):
+    """
+    funcion para crear una nueva etapa.
+    """
+    coverage_request = CoverageRequest[data["coverage_request"]]
+
+    new_stage = Stage(
+        id_project=data["id_project"],
+        name=data["name"],
+        description=data.get("description"),
+        start_date=data["start_date"],
+        end_date=data.get("end_date"),
+        coverage_request=coverage_request
+    )
+    stage_functions.create_stage(new_stage)
+    if new_stage:
+        return new_stage
+    return None
+    
+        

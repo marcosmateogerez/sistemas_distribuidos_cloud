@@ -48,3 +48,13 @@ def set_stage_as_finished(stage_id: int):
         db.session.commit()
         return stage
     return None
+
+
+def create_stage(new_stage: Stage):
+    """
+    funcion para crear una nueva etapa.
+    """
+    new_stage.status = status_stage.PENDING
+    db.session.add(new_stage)
+    db.session.commit()
+    return new_stage or None

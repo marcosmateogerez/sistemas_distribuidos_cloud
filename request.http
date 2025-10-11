@@ -1,16 +1,14 @@
-
-
-GET http://localhost:5000/stages/v1/get_available_stages/1
+POST http://localhost:5000/stages/v1/create_stage
+Content-Type: application/json
 Accept: application/json
 
-
-
-GET http://localhost:5000/stages/v1/cover_stage/2
-Accept: application/json
-
-GET http://localhost:5000/stages/v1/finish_stage/3
-Accept: application/json
-
-
+{
+    "id_project": 1,
+    "name": "Nuevo Stage POST",
+    "description": "Description of the stage",
+    "start_date": "2023-10-01 00:00:00",
+    "end_date": "2023-12-31 23:59:59",
+    "coverage_request": "DINERO"
+}
 
 
