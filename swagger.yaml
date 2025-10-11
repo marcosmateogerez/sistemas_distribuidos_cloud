@@ -1,0 +1,50 @@
+paths:
+  /login:
+    post:
+      summary: Autentica al usuario y genera un token JWT.
+      tags:
+        - Autenticación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "usuario@example.com"
+                password:
+                  type: string
+                  example: "123456"
+      responses:
+        200:
+          description: Autenticación exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: Token JWT válido por 1 hora
+        400:
+          description: Datos faltantes o inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "No se enviaron datos o faltan campos obligatorios"
+        401:
+          description: Credenciales incorrectas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Usuario o contraseña incorrectos"
