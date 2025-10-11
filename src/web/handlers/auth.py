@@ -1,4 +1,4 @@
-from core import user as user_functions 
+from src.core import user as user_functions 
 from functools import wraps
 from flask import request, jsonify, current_app, g
 import jwt

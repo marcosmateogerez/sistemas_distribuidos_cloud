@@ -1,4 +1,4 @@
-from core.user import get_user_by_email, verify_user_password
+from src.core.user import get_user_by_email, verify_user_password
 from datetime import datetime, timedelta, timezone
 from werkzeug.exceptions import BadRequest
 from flask import current_app as app

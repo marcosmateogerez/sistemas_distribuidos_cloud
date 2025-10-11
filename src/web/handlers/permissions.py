@@ -1,4 +1,4 @@
-from core.user import get_user_by_id
+from src.core.user import get_user_by_id
 from flask import g, jsonify
 from functools import wraps
 
