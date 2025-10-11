@@ -1,5 +1,6 @@
 from src.core.observation.model import Observation, Status
 from src.core.database import db
+from typing import List
 
 def create_observation(project_id: int, name: str, description: str = "") -> Observation:
     """
@@ -14,3 +15,10 @@ def create_observation(project_id: int, name: str, description: str = "") -> Obs
     db.session.add(observation)
     db.session.commit()
     return observation
+
+
+def get_observations_by_project(project_id: int) -> List[Observation]:
+    """
+    Devuelve todas las observaciones asociadas a un proyecto.
+    """
+    return Observation.query.filter_by(id_project=project_id).all()

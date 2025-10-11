@@ -3,6 +3,7 @@ from src import config
 from src.core.database import db, reset
 from src.core import seed_data
 from src.web.controllers.login import bp_login
+from src.web.controllers.observation import bp_observation
 from src.web.controllers.stage import bp as bp_stage
 
 # Creación de la app principal.
@@ -25,6 +26,7 @@ def create_app(env="development") -> Flask:
     # Registro de blueprints.
     app.register_blueprint(bp_login)
     app.register_blueprint(bp_stage)
+    app.register_blueprint(bp_observation)
     
     # Renderización del home.
     @app.route("/")
