@@ -7,9 +7,8 @@ bp_login = Blueprint("login", __name__, url_prefix="/login")
 @bp_login.post("/v1/authenticate")
 def authenticate():
     """
-    Autentica al usuario y genera un token JWT.
+    Endpoint que autentica al usuario y genera un token JWT.
     """
-
     # Obtiene los datos del cuerpo JSON.
     data = request.get_json()
     try:

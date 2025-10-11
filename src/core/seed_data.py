@@ -31,7 +31,7 @@ def run():
     permiso_ong_originante_upload_corrected_observation = Permission(name="upload_corrected_observation")
 
     # Crear permisos para la ONG colaborativa.
-    permiso_ong_colaborativa_list_stages = Permission(name="list_stages")
+    permiso_ong_colaborativa_list_available_stages = Permission(name="list_available_stages")
     permiso_ong_colaborativa_subscribe_to_stage = Permission(name="subscribe_to_stage")
     permiso_ong_colaborativa_complete_stage = Permission(name="complete_stage")
 
@@ -42,7 +42,7 @@ def run():
     db.session.add(permiso_ong_originante_upload_stage)
     db.session.add(permiso_ong_originante_list_observations)
     db.session.add(permiso_ong_originante_upload_corrected_observation)
-    db.session.add(permiso_ong_colaborativa_list_stages)
+    db.session.add(permiso_ong_colaborativa_list_available_stages)
     db.session.add(permiso_ong_colaborativa_subscribe_to_stage)
     db.session.add(permiso_ong_colaborativa_complete_stage)
     db.session.add(permiso_consejo_directivo_add_observation)
@@ -56,7 +56,7 @@ def run():
 
     # Asignación de permisos al rol de ONG colaborativa.
     rol_ong_colaborativa.permissions.extend([
-        permiso_ong_colaborativa_list_stages,
+        permiso_ong_colaborativa_list_available_stages,
         permiso_ong_colaborativa_subscribe_to_stage,
         permiso_ong_colaborativa_complete_stage
     ])
