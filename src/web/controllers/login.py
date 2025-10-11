@@ -5,7 +5,7 @@ from werkzeug.exceptions import BadRequest
 bp_login = Blueprint("login", __name__, url_prefix="/login")
 
 
-@bp_login.post("/login")
+@bp_login.post("/")
 def authenticate():
     """
     Autentica al usuario y genera un token JWT.
