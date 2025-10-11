@@ -1,10 +1,10 @@
-from flask import Flask
-from src import config
-from src.core.database import db, reset
-from src.core import seed_data
-from src.web.controllers.login import bp_login
 from src.web.controllers.observation import bp_observation
 from src.web.controllers.stage import bp as bp_stage
+from src.web.controllers.login import bp_login
+from src.core.database import db, reset
+from src.core import seed_data
+from flask import Flask
+from src import config
 
 # Creación de la app principal.
 def create_app(env="development") -> Flask:

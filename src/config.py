@@ -31,7 +31,7 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(Config):
-    """Production configuration."""
+    """Configuración de testing."""
     
     TESTING = True
     

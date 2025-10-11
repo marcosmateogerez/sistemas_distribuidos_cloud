@@ -1,10 +1,9 @@
 from src.web.services.observation import validate_observation_data, get_observations_by_project
+from src.core.observation import create_observation, mark_observation_as_resolved
 from src.web.handlers.permissions import requires_permission
 from src.web.handlers.auth import token_required
-from src.core.observation import create_observation, mark_observation_as_resolved
 from flask import Blueprint, request, jsonify
 from werkzeug.exceptions import BadRequest
-from flask import g
 
 bp_observation = Blueprint("observation", __name__, url_prefix="/observations")
 
