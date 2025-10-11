@@ -1,74 +1,102 @@
-from src.core.database import db
-from src.core.role.model import Role
-from src.core.permission.model import Permission
-from src.core.user.model import User
-from src.core.stage.model import Stage, CoverageRequest
-from src.core.observation.model import Observation 
 from src.core.observation.model import Status as status_observation
+from src.core.stage.model import Stage, CoverageRequest
 from src.core.stage.model import status as status_stage
-
+from src.core.observation.model import Observation
+from src.core.permission.model import Permission
+from src.core.role.model import Role
+from src.core.user.model import User
 from werkzeug.security import generate_password_hash
+from src.core.database import db
 
 def run():
     """
-    Creación de las tablas iniciales roles y permisos.
+    Creación de las tablas iniciales.
     """
 
     # Crear roles.
-    rol_ong = Role(name="ONG")
-    rol_consejo = Role(name="Consejo Directivo")
+    rol_ong_originante = Role(name="ONG originante")
+    rol_ong_colaborativa = Role(name="ONG colaborativa")
+    rol_consejo_directivo = Role(name="Consejo Directivo")
+    rol_system_admin = Role(name="System Admin")
 
     # Agregar roles a la sesión.
-    db.session.add(rol_ong)
-    db.session.add(rol_consejo)
+    db.session.add(rol_ong_originante)
+    db.session.add(rol_ong_colaborativa)
+    db.session.add(rol_consejo_directivo)
+    db.session.add(rol_system_admin)
 
-    # Crear permisos.
-    permiso_ong_index = Permission(name="ong_index")
-    permiso_ong_contribute = Permission(name="ong_contribute")
-    permiso_ong_accept_contribution = Permission(name="ong_accept_contribution")
-    permiso_consejo_index = Permission(name="consejo_index")
+    # Crear permisos para la ONG originante.
+    permiso_ong_originante_upload_stage = Permission(name="upload_stage")
+    permiso_ong_originante_list_observations = Permission(name="list_observations")
+    permiso_ong_originante_upload_corrected_observation = Permission(name="upload_corrected_observation")
+
+    # Crear permisos para la ONG colaborativa.
+    permiso_ong_colaborativa_list_stages = Permission(name="list_stages")
+    permiso_ong_colaborativa_subscribe_to_stage = Permission(name="subscribe_to_stage")
+    permiso_ong_colaborativa_complete_stage = Permission(name="complete_stage")
+
+    # Crear permisos para el Consejo Directivo.
+    permiso_consejo_directivo_add_observation = Permission(name="add_observation")
 
     # Agregar permisos a la sesión.
-    db.session.add(permiso_ong_index)
-    db.session.add(permiso_ong_contribute)
-    db.session.add(permiso_ong_accept_contribution)
-    db.session.add(permiso_consejo_index)
+    db.session.add(permiso_ong_originante_upload_stage)
+    db.session.add(permiso_ong_originante_list_observations)
+    db.session.add(permiso_ong_originante_upload_corrected_observation)
+    db.session.add(permiso_ong_colaborativa_list_stages)
+    db.session.add(permiso_ong_colaborativa_subscribe_to_stage)
+    db.session.add(permiso_ong_colaborativa_complete_stage)
+    db.session.add(permiso_consejo_directivo_add_observation)
 
-    # Asignación de permisos al rol de ong.
-    rol_ong.permissions.extend([
-        permiso_ong_index,
-        permiso_ong_contribute,
-        permiso_ong_accept_contribution
+    # Asignación de permisos al rol de ONG originante.
+    rol_ong_originante.permissions.extend([
+        permiso_ong_originante_upload_stage,
+        permiso_ong_originante_list_observations,
+        permiso_ong_originante_upload_corrected_observation
     ])
 
-    # Asignación de permisos al rol de consejo directivo.
-    rol_consejo.permissions.extend([
-        permiso_consejo_index
+    # Asignación de permisos al rol de ONG colaborativa.
+    rol_ong_colaborativa.permissions.extend([
+        permiso_ong_colaborativa_list_stages,
+        permiso_ong_colaborativa_subscribe_to_stage,
+        permiso_ong_colaborativa_complete_stage
+    ])
+
+    # Asignación de permisos al rol de Consejo Directivo.
+    rol_consejo_directivo.permissions.extend([
+        permiso_consejo_directivo_add_observation
     ])
 
     # Guardo los cambios para que se le asigne un id a los roles y poder usarlo luego.
     db.session.commit()
 
-    # Creación de usuario con el rol ong.
-    user_ong = User(
-        email="ong@projectplanning.org",
-        password=generate_password_hash("ong123"),
-        role_id=rol_ong.id
+    # Creación de usuario con el rol ONG originante.
+    user_ong_originante = User(
+        email="ong_originante@projectplanning.org",
+        password=generate_password_hash("ong_originante"),
+        role_id=rol_ong_originante.id
     )
 
-    # Creación de usuario con el rol consejo directivo.
-    user_consejo = User(
-        email="consejo@projectplanning.org",
-        password=generate_password_hash("consejo123"),
-        role_id=rol_consejo.id
+    # Creación de usuario con el rol ONG colaborativa.
+    user_ong_colaborativa = User(
+        email="ong_colaborativa@projectplanning.org",
+        password=generate_password_hash("ong_colaborativa"),
+        role_id=rol_ong_colaborativa.id
+    )
+
+    # Creación de usuario con el rol Consejo Directivo.
+    user_consejo_directivo = User(
+        email="consejo_directivo@projectplanning.org",
+        password=generate_password_hash("consejo_directivo"),
+        role_id=rol_consejo_directivo.id
     )
 
     # Agregar usuarios a la sesión.
-    db.session.add(user_ong)
-    db.session.add(user_consejo)
+    db.session.add(user_ong_originante)
+    db.session.add(user_ong_colaborativa)
+    db.session.add(user_consejo_directivo)
 
-    #Creación de una stage de ejemplo
-    stage_example = Stage(
+    # Crear stages de ejemplo.
+    stage_1 = Stage(
         id_project=1,
         name="Etapa de ejemplo",
         description="Esta es una etapa de ejemplo para un proyecto.",
@@ -97,7 +125,8 @@ def run():
         coverage_request=CoverageRequest.MANO_DE_OBRA,
         status=status_stage.PENDING
     )
-    # Agregar observación a la sesión.
+
+    # Crear observación de ejemplo.
     observation_example = Observation(
         id_project=1,
         name="Observación de ejemplo",
@@ -105,7 +134,8 @@ def run():
         status=status_observation.PENDING
     )
     
-    db.session.add(stage_example)
+    # Agregar stages y observaciones a la sesión.
+    db.session.add(stage_1)
     db.session.add(stage_2)
     db.session.add(stage_3)
     db.session.add(observation_example)
