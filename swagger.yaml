@@ -13,10 +13,10 @@ paths:
               properties:
                 email:
                   type: string
-                  example: "usuario@example.com"
+                  example: "ong_originante@projectplanning.org"
                 password:
                   type: string
-                  example: "123456"
+                  example: "ong_originante"
       responses:
         200:
           description: Autenticación exitosa
@@ -98,9 +98,9 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Faltan campos obligatorios"
+                    example: "No se enviaron datos o faltan campos obligatorios"
         401:
-          description: Usuario no autenticado / token faltante o expirado
+          description: Usuario no autenticado / token faltante o token expirado
           content:
             application/json:
               schema:
@@ -108,7 +108,7 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: "Token faltante"
+                    example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
           content:
@@ -129,3 +129,142 @@ paths:
                   error:
                     type: string
                     example: "Usuario no encontrado"
+
+  /observations/v1/list_observations/{project_id}:
+    get:
+      tags:
+        - Observations
+      summary: Listar observaciones de un proyecto
+      description: Obtiene todas las observaciones asociadas a un proyecto. Requiere token JWT y permiso `list_observations`.
+      parameters:
+        - name: project_id
+          in: path
+          description: ID del proyecto del cual se desean obtener las observaciones
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Lista de observaciones obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    id_project:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Revisión de infraestructura"
+                    description:
+                      type: string
+                      example: "Se detectó necesidad de mejora en el pavimento"
+                    status:
+                      type: string
+                      example: "PENDING"
+        401:
+          description: Usuario no autenticado / token faltante o token expirado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Usuario no autenticado / token faltante o token expirado"
+        403:
+          description: Permiso denegado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Permiso denegado"
+        404:
+          description: No se encontraron observaciones para el proyecto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No se encontraron observaciones para el proyecto con ID 12."
+
+  /observations/v1/upload_corrected_observation/{observation_id}:
+    put:
+      tags:
+        - Observations
+      summary: Marcar observación como completada
+      description: Marca una observación como completada (estado `RESOLVED`) a partir de su ID. Requiere token JWT y permiso `upload_corrected_observation`.
+      parameters:
+        - name: observation_id
+          in: path
+          description: ID de la observación que se desea marcar como completada
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Observación marcada como completada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "La observación con ID 1 ha sido marcada como completada."
+                  id:
+                    type: integer
+                    example: 1
+                  id_project:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: "Revisión de infraestructura"
+                  description:
+                    type: string
+                    example: "Se completaron las mejoras en el pavimento"
+                  status:
+                    type: string
+                    example: "RESOLVED"
+        401:
+          description: Usuario no autenticado / token faltante o token expirado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Usuario no autenticado / token faltante o token expirado"
+        403:
+          description: Permiso denegado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Permiso denegado"
+        404:
+          description: Observación no encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "No se encontró la observación con ID 12"

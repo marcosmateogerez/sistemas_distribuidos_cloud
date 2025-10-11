@@ -1,11 +1,9 @@
-from src.core.observation.model import Status as status_observation
 from src.core.stage.model import Stage, CoverageRequest
 from src.core.stage.model import status as status_stage
-from src.core.observation.model import Observation
+from werkzeug.security import generate_password_hash
 from src.core.permission.model import Permission
 from src.core.role.model import Role
 from src.core.user.model import User
-from werkzeug.security import generate_password_hash
 from src.core.database import db
 
 def run():
@@ -125,20 +123,11 @@ def run():
         coverage_request=CoverageRequest.MANO_DE_OBRA,
         status=status_stage.PENDING
     )
-
-    # Crear observación de ejemplo.
-    observation_example = Observation(
-        id_project=1,
-        name="Observación de ejemplo",
-        description="Esta es una observación de ejemplo para un proyecto.",
-        status=status_observation.PENDING
-    )
     
     # Agregar stages y observaciones a la sesión.
     db.session.add(stage_1)
     db.session.add(stage_2)
     db.session.add(stage_3)
-    db.session.add(observation_example)
     
     # Almacenamiento de las tablas en la base de datos.
     db.session.commit()
