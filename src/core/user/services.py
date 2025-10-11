@@ -1,7 +1,16 @@
-from src.core.user.model import User
 from werkzeug.security import check_password_hash
+from src.core.user.model import User
 
-def get_user_by_email(email: str):
+def get_user_by_id(user_id: int) -> User | None:
+    """
+    Devuelve un usuario por su ID o none si no existe.
+    """
+    if not user_id:
+        return None
+    return User.query.get(user_id)
+
+
+def get_user_by_email(email: str) -> User | None:
     """
     Devuelve un usuario por email o devuelve none si no existe.
     """

@@ -2,8 +2,6 @@ from flask import Blueprint, request, jsonify
 from src.core.stage.model import Stage, CoverageRequest
 from src.web.services import stage as stage_service 
 
-
-
 bp = Blueprint("stage", __name__, url_prefix="/stages")
 
 @bp.get("v1/get_available_stages/<int:project_id>")

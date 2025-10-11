@@ -1,5 +1,5 @@
 paths:
-  /login:
+  /login/v1/authenticate:
     post:
       summary: Autentica al usuario y genera un token JWT.
       tags:
