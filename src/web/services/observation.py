@@ -1,4 +1,4 @@
-from src.core.observation import get_observations_by_project
+from src.core import observation
 from werkzeug.exceptions import BadRequest
 from typing import List, Dict
 
@@ -13,12 +13,12 @@ def validate_observation_data(data):
     return data["name"], data["description"]
 
 
-def list_observations_by_project(project_id: int) -> List[Dict]:
+def get_observations_by_project(project_id: int) -> List[Dict]:
     """
     Devuelve todas las observaciones de un proyecto, convertidas a diccionarios.
     """
     # Busca las observaciones en la base de datos.
-    observations = get_observations_by_project(project_id=project_id)
+    observations = observation.get_observations_by_project(project_id=project_id)
 
     # Si no existen observaciones devuelve una lista vacía.
     if not observations:

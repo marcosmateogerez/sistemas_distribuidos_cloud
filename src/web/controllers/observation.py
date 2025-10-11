@@ -1,7 +1,7 @@
-from src.web.services.observation import validate_observation_data, list_observations_by_project
+from src.web.services.observation import validate_observation_data, get_observations_by_project
 from src.web.handlers.permissions import requires_permission
 from src.web.handlers.auth import token_required
-from src.core.observation import create_observation
+from src.core.observation import create_observation, mark_observation_as_resolved
 from flask import Blueprint, request, jsonify
 from werkzeug.exceptions import BadRequest
 from flask import g
@@ -35,13 +35,38 @@ def add_observation(project_id: int):
 @bp_observation.get("/v1/list_observations/<int:project_id>")
 @token_required
 @requires_permission("list_observations")
-def get_observations(project_id: int):
+def list_observations(project_id: int):
     """
     Endpoint para obtener todas las observaciones de un proyecto según su ID.
     """
-    observations = list_observations_by_project(project_id)
+    observations = get_observations_by_project(project_id)
 
     if not observations:
         return jsonify({"message": f"No se encontraron observaciones para el proyecto con ID {project_id}."}), 404
 
     return jsonify(observations), 200
+
+
+@bp_observation.put("/v1/upload_corrected_observation/<int:observation_id>")
+@token_required
+@requires_permission("upload_corrected_observation")
+def upload_corrected_observation(observation_id: int):
+    """
+    Endpoint para marcar una observación como completada a partir de su ID.
+    """
+    # Marca la observación como completa.
+    observation = mark_observation_as_resolved(observation_id)
+    
+    # Devuelve un mensaje de error si la observación no existe.
+    if not observation:
+        return jsonify({"message": f"No se encontró la observación con ID {observation_id}"}), 404
+
+    # Devuelve la respuesta en caso que haya salido bien.
+    return jsonify({
+        "message": f"La observación con ID {observation_id} ha sido marcada como completada.",
+        "id": observation.id,
+        "id_project": observation.id_project,
+        "name": observation.name,
+        "description": observation.description,
+        "status": observation.status.value
+    }), 200
