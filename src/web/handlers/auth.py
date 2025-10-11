@@ -42,17 +42,14 @@ def token_required(f):
         token = None
 
         auth_header = request.headers.get("Authorization")
-
         
-        if not auth_header or not auth_header.startswith("Bearer "):
-            return jsonify({"error": "Token no proporcionado"}), 401
-        token = auth_header.split(" ")[1]
-        
-        request.cookies.get("access_token")
-        token = request.cookies.get("access_token")
+        if "Authorization" in request.headers:
+            auth_header = request.headers["Authorization"]
+            #Extraer token del header, si viene con Bearer  
+            token = auth_header.split(" ")[1] if " " in auth_header else auth_header
 
         if not token:
-            return jsonify({"error": "Token requerido"}), 401
+            return jsonify({"error": "Token faltante"}), 401
 
         try:
             #Decodificar token
@@ -73,7 +70,7 @@ def token_required(f):
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token expirado"}), 401
         except jwt.InvalidTokenError:
-            return jsonify({"error": "Token inválido"}), 401
+            return jsonify({"error": "Token invalido"}), 401
 
         return f(*args, **kwargs)
 

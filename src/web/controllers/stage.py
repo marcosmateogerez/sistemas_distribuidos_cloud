@@ -24,6 +24,7 @@ def get_available_stages(project_id: int):
 
 
 @bp.get("v1/cover_stage/<int:stage_id>")
+@token_required
 def cover_stage_by_id(stage_id: int):
     """
     Endpoint para cubrir una etapa específica según su ID.
@@ -36,6 +37,7 @@ def cover_stage_by_id(stage_id: int):
 
 
 @bp.get("v1/finish_stage/<int:stage_id>")
+@token_required
 def finish_stage_by_id(stage_id: int):
     """
     Endpoint para finalizar una etapa especifica según su ID.
@@ -47,6 +49,7 @@ def finish_stage_by_id(stage_id: int):
 
 
 @bp.post("v1/create_stage")
+@token_required
 def create_stage():
     """
     Endpoint para crear una nueva etapa recibiendo los datos en formato JSON.
@@ -61,7 +64,7 @@ def create_stage():
     
     
     
-@bp.get("login_required_test")
+@bp.get("v1/login_required_test")
 @token_required
 def login_required_test():
     """
