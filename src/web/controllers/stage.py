@@ -2,7 +2,6 @@ from src.web.handlers.permissions import requires_permission
 from src.web.services import stage as stage_service 
 from src.web.handlers.auth import token_required
 from flask import Blueprint, request, jsonify
-from flask import g
 
 bp = Blueprint("stage", __name__, url_prefix="/stages")
 
@@ -59,12 +58,3 @@ def create_stage():
             return jsonify({"message": "Etapa creada exitosamente.", "stage": new_stage.to_dict()}), 201
     except Exception as e:
         return jsonify({"message": "Error al crear la etapa.", "error": str(e)}), 400
-
-    
-@bp.get("/v1/login_required_test")
-@token_required
-def login_required_test():
-    """
-    Endpoint de prueba para verificar que el decorador token_required funciona correctamente.
-    """
-    return jsonify({"message": f"Acceso concedido. Usuario actual: {g.current_user.email}"}), 200
