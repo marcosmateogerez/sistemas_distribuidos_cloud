@@ -1,5 +1,16 @@
-GET http://localhost:5000/stages/v1/cover_stage/3
+
+
+GET http://localhost:5000/stages/v1/get_available_stages/1
 Accept: application/json
 
-GET http://localhost:5000/stages/v1/get_available_stages/2
+
+
+GET http://localhost:5000/stages/v1/cover_stage/2
 Accept: application/json
+
+GET http://localhost:5000/stages/v1/finish_stage/3
+Accept: application/json
+
+
+
+

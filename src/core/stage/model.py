@@ -16,7 +16,7 @@ class status(enum.Enum):
     """
     PENDING = "PENDING"
     IN_PROGRESS = "IN_PROGRESS"
-    RESOLVED = "RESOLVED"
+    FINISHED = "FINISHED"
 
 class Stage(db.Model):
     """

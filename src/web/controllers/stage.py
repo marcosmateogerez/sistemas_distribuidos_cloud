@@ -26,7 +26,16 @@ def cover_stage_by_id(stage_id: int):
     # Aquí iría la lógica para cubrir la etapa con el ID proporcionado
     result = stage_service.cover_stage(stage_id)
     if result:
-        return jsonify({"message": f"La etapa con ID {stage_id} ha pasado de pendiente a en ejecución exitosamente."}), 200
-    else:
-        return jsonify({"message": f"No se pudo cubrir la etapa con ID {stage_id}. Es posible que ya esté en progreso o haya sido cubierta."}), 400
-    
+        return jsonify({"message": f"La etapa con ID {stage_id} ha pasado de pendiente a en ejecucion exitosamente."}), 200
+    return jsonify({"message": f"No se pudo cubrir la etapa con ID {stage_id}. Es posible que ya este en progreso o haya sido cubierta."}), 400
+
+
+@bp.get("v1/finish_stage/<int:stage_id>")
+def finish_stage_by_id(stage_id: int):
+    """
+    Endpoint para finalizar una etapa especifica según su ID.
+    """
+    result = stage_service.finish_stage(stage_id)
+    if result: 
+        return jsonify({"message": f"La etapa con ID {stage_id} ha sido finalizada exitosamente."}), 200
+    return jsonify({"message": f"No se pudo finalizar la etapa con ID {stage_id}. Es posible que no este pendiente o que ya haya finalizado."}), 400

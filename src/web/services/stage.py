@@ -28,3 +28,15 @@ def cover_stage(stage_id: int):
             stage_functions.set_stage_in_progress(stage_id)
             return True
     return False
+
+def finish_stage(stage_id: int):
+    """
+    funcion para finalizar una etapa específica según su ID.
+    """
+    stage = stage_functions.cover_stage(stage_id)
+    # Lógica para indicar que la etapa ya está cubierta
+    if stage:
+        if stage.status == status_stage.IN_PROGRESS:
+            stage_functions.set_stage_as_finished(stage_id)
+            return True
+    return False
