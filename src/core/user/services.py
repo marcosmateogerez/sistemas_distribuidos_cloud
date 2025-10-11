@@ -24,3 +24,9 @@ def verify_user_password(user: User, password: str) -> bool:
     if not user:
         return False
     return check_password_hash(user.password, password)
+
+def get_user_by_id(user_id: int):
+    """
+    Devuelve un usuario por ID o devuelve none si no existe.
+    """
+    return User.query.get(user_id)

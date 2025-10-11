@@ -1,10 +1,15 @@
 from flask import Blueprint, request, jsonify
 from src.core.stage.model import Stage, CoverageRequest
 from src.web.services import stage as stage_service 
+from src.web.handlers.auth import token_required
+from flask import g
 
 bp = Blueprint("stage", __name__, url_prefix="/stages")
 
+
+
 @bp.get("v1/get_available_stages/<int:project_id>")
+@token_required
 def get_available_stages(project_id: int):
     """
     Endpoint para obtener las etapas disponibles de un proyecto.
@@ -17,6 +22,7 @@ def get_available_stages(project_id: int):
 
 
 @bp.get("v1/cover_stage/<int:stage_id>")
+@token_required
 def cover_stage_by_id(stage_id: int):
     """
     Endpoint para cubrir una etapa específica según su ID.
@@ -29,6 +35,7 @@ def cover_stage_by_id(stage_id: int):
 
 
 @bp.get("v1/finish_stage/<int:stage_id>")
+@token_required
 def finish_stage_by_id(stage_id: int):
     """
     Endpoint para finalizar una etapa especifica según su ID.
@@ -40,6 +47,7 @@ def finish_stage_by_id(stage_id: int):
 
 
 @bp.post("v1/create_stage")
+@token_required
 def create_stage():
     """
     Endpoint para crear una nueva etapa recibiendo los datos en formato JSON.
@@ -51,3 +59,13 @@ def create_stage():
             return jsonify({"message": "Etapa creada exitosamente.", "stage": new_stage.to_dict()}), 201
     except Exception as e:
         return jsonify({"message": "Error al crear la etapa.", "error": str(e)}), 400
+    
+    
+    
+@bp.get("v1/login_required_test")
+@token_required
+def login_required_test():
+    """
+    Endpoint de prueba para verificar que el decorador token_required funciona correctamente.
+    """
+    return jsonify({"message": f"Acceso concedido. Usuario actual: {g.current_user.email}"}), 200
