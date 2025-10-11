@@ -8,7 +8,7 @@ class Status(enum.Enum):
     """
     PENDING = "PENDING"
     RESOLVED = "RESOLVED"
-    
+
 class Observation(db.Model):
     """
     Modelo para representar la etapa de un proyecto.
@@ -19,4 +19,3 @@ class Observation(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(255), nullable=True)
     status = db.Column(Enum(Status), nullable=False, default=Status.PENDING)
-    

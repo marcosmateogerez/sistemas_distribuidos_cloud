@@ -6,7 +6,7 @@ from flask import g
 
 bp = Blueprint("stage", __name__, url_prefix="/stages")
 
-@bp.get("v1/get_available_stages/<int:project_id>")
+@bp.get("/v1/get_available_stages/<int:project_id>")
 @token_required
 @requires_permission("list_available_stages")
 def get_available_stages(project_id: int):
@@ -19,7 +19,7 @@ def get_available_stages(project_id: int):
     return jsonify(stages_list), 200
 
 
-@bp.get("v1/cover_stage/<int:stage_id>")
+@bp.get("/v1/cover_stage/<int:stage_id>")
 @token_required
 @requires_permission("subscribe_to_stage")
 def cover_stage_by_id(stage_id: int):
@@ -32,7 +32,7 @@ def cover_stage_by_id(stage_id: int):
     return jsonify({"message": f"No se pudo cubrir la etapa con ID {stage_id}. Es posible que ya este en progreso o haya sido cubierta."}), 400
 
 
-@bp.get("v1/finish_stage/<int:stage_id>")
+@bp.get("/v1/finish_stage/<int:stage_id>")
 @token_required
 @requires_permission("complete_stage")
 def finish_stage_by_id(stage_id: int):
@@ -45,7 +45,7 @@ def finish_stage_by_id(stage_id: int):
     return jsonify({"message": f"No se pudo finalizar la etapa con ID {stage_id}. Es posible que no este pendiente o que ya haya finalizado."}), 400
 
 
-@bp.post("v1/create_stage")
+@bp.post("/v1/create_stage")
 @token_required
 @requires_permission("upload_stage")
 def create_stage():
@@ -61,7 +61,7 @@ def create_stage():
         return jsonify({"message": "Error al crear la etapa.", "error": str(e)}), 400
 
     
-@bp.get("v1/login_required_test")
+@bp.get("/v1/login_required_test")
 @token_required
 def login_required_test():
     """
