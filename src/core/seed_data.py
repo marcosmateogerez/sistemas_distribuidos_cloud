@@ -1,5 +1,4 @@
-from src.core.stage.model import Stage, CoverageRequest
-from src.core.stage.model import status as status_stage
+from src.core.stage.model import Stage, CoverageRequest, StatusStage
 from werkzeug.security import generate_password_hash
 from src.core.permission.model import Permission
 from src.core.role.model import Role
@@ -101,7 +100,7 @@ def run():
         start_date="2023-10-01 00:00:00",
         end_date="2023-12-31 23:59:59",
         coverage_request=CoverageRequest.DINERO,
-        status=status_stage.PENDING
+        status=StatusStage.PENDING
     )
     
     stage_2 = Stage(
@@ -111,7 +110,7 @@ def run():
         start_date="2023-10-01 00:00:00",
         end_date="2023-12-31 23:59:59",
         coverage_request=CoverageRequest.MATERIALES,
-        status=status_stage.PENDING
+        status=StatusStage.PENDING
     )
     
     stage_3 = Stage(
@@ -121,7 +120,7 @@ def run():
         start_date="2023-10-01 00:00:00",
         end_date="2023-12-31 23:59:59",
         coverage_request=CoverageRequest.MANO_DE_OBRA,
-        status=status_stage.PENDING
+        status=StatusStage.PENDING
     )
     
     # Agregar stages y observaciones a la sesión.

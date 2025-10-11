@@ -1,10 +1,6 @@
-from flask import jsonify
+from src.core.stage.model import Stage, StatusStage, CoverageRequest
 from src.core import stage as stage_functions
-from src.core.stage.model import status as status_stage
-from src.core.stage.model import Stage
-from src.core.stage.model import CoverageRequest
 from src.core.database import db
-
 
 def get_available_stages(project_id: int):
     """
@@ -12,10 +8,10 @@ def get_available_stages(project_id: int):
     """
     stages_list = stage_functions.get_available_stages(project_id)
     
-    # Convertir los objetos Stage a diccionarios
+    # Convertir los objetos Stage a diccionarios.
     stages_dict = [stage.to_dict() for stage in stages_list]
 
-    # Retornar la lista de etapas como JSON
+    # Retornar la lista de etapas como JSON.
     return stages_dict
     
     
@@ -24,13 +20,13 @@ def cover_stage(stage_id: int):
     funcion para cubrir una etapa específica según su ID.
     """
     stage = stage_functions.cover_stage(stage_id)
-    # Lógica para indicar que la etapa ya está cubierta
+
+    # Lógica para indicar que la etapa ya está cubierta.
     if stage:
-        if stage.status == status_stage.PENDING:
+        if stage.status == StatusStage.PENDING:
             stage_functions.set_stage_in_progress(stage_id)
             return True
     return False
-
 
 
 def finish_stage(stage_id: int):
@@ -38,9 +34,10 @@ def finish_stage(stage_id: int):
     funcion para finalizar una etapa específica según su ID.
     """
     stage = stage_functions.cover_stage(stage_id)
-    # Lógica para indicar que la etapa ya está cubierta
+
+    # Lógica para indicar que la etapa ya está cubierta.
     if stage:
-        if stage.status == status_stage.IN_PROGRESS:
+        if stage.status == StatusStage.IN_PROGRESS:
             stage_functions.set_stage_as_finished(stage_id)
             return True
     return False
@@ -64,5 +61,3 @@ def create_stage(data: dict):
     if new_stage:
         return new_stage
     return None
-    
-        

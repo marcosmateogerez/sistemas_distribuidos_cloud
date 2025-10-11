@@ -1,19 +1,13 @@
-from src.core.stage.model import Stage
+from src.core.stage.model import Stage, StatusStage
 from src.core.database import db
-from src.core.stage.model import status as status_stage
-from flask import jsonify
-
-
-
 
 def get_available_stages(project_id: int):
     """
     funcion para obtener las etapas disponibles de un proyecto.
     """
-    stages_list = Stage.query.filter_by(id_project=project_id, status=status_stage.PENDING).all()
+    stages_list = Stage.query.filter_by(id_project=project_id, status=StatusStage.PENDING).all()
     return stages_list
-   
-   
+
    
 def cover_stage(stage_id: int):
     """
@@ -21,10 +15,9 @@ def cover_stage(stage_id: int):
     """
     stage = Stage.query.get(stage_id)
 
-    # Lógica para indicar que la etapa ya está cubierta
+    # Lógica para indicar que la etapa ya está cubierta.
     return stage
-    
-    
+
 
 def set_stage_in_progress(stage_id: int):
     """
@@ -32,7 +25,7 @@ def set_stage_in_progress(stage_id: int):
     """
     stage = Stage.query.get(stage_id)
     if stage:
-        stage.status = status_stage.IN_PROGRESS
+        stage.status = StatusStage.IN_PROGRESS
         db.session.commit()
         return stage
     return None
@@ -44,7 +37,7 @@ def set_stage_as_finished(stage_id: int):
     """
     stage = Stage.query.get(stage_id)
     if stage:
-        stage.status = status_stage.FINISHED
+        stage.status = StatusStage.FINISHED
         db.session.commit()
         return stage
     return None
@@ -54,7 +47,7 @@ def create_stage(new_stage: Stage):
     """
     funcion para crear una nueva etapa.
     """
-    new_stage.status = status_stage.PENDING
+    new_stage.status = StatusStage.PENDING
     db.session.add(new_stage)
     db.session.commit()
     return new_stage or None

@@ -10,7 +10,7 @@ class CoverageRequest(enum.Enum):
     MATERIALES = "MATERIALES"
     MANO_DE_OBRA = "MANO_DE_OBRA"
 
-class status(enum.Enum):
+class StatusStage(enum.Enum):
     """
     Enum para los estados de una etapa del proyecto.
     """
@@ -30,7 +30,7 @@ class Stage(db.Model):
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=True)
     coverage_request = db.Column(Enum(CoverageRequest), nullable=False)
-    status = db.Column(Enum(status), default=status.PENDING, nullable=False)
+    status = db.Column(Enum(StatusStage), default=StatusStage.PENDING, nullable=False)
     
     
     def to_dict(self):
