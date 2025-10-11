@@ -10,6 +10,13 @@ class CoverageRequest(enum.Enum):
     MATERIALES = "MATERIALES"
     MANO_DE_OBRA = "MANO_DE_OBRA"
 
+class status(enum.Enum):
+    """
+    Enum para los estados de una etapa del proyecto.
+    """
+    PENDING = "PENDING"
+    IN_PROGRESS = "IN_PROGRESS"
+    RESOLVED = "RESOLVED"
 
 class Stage(db.Model):
     """
@@ -23,6 +30,7 @@ class Stage(db.Model):
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=True)
     coverage_request = db.Column(Enum(CoverageRequest), nullable=False)
+    status = db.Column(Enum(status), default=status.PENDING, nullable=False)
     
     
     def to_dict(self):
@@ -34,4 +42,5 @@ class Stage(db.Model):
                 "start_date": self.start_date.isoformat() if self.start_date else None,
                 "end_date": self.end_date.isoformat() if self.end_date else None,
                 "coverage_request": self.coverage_request.name if self.coverage_request else None,
+                "status": self.status.name if self.status else None
             }

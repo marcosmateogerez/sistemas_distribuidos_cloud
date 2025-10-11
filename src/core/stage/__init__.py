@@ -1,5 +1,6 @@
 from src.core.stage.model import Stage
 from src.core.database import db
+from src.core.stage.model import status as status_stage
 from flask import jsonify
 
 
@@ -7,16 +8,27 @@ from flask import jsonify
 
 def get_available_stages(project_id: int):
     """
-    Endpoint para obtener las etapas disponibles de un proyecto.
+    funcion para obtener las etapas disponibles de un proyecto.
     """
     stages_list = Stage.query.filter_by(id_project=project_id).all()
-    print("STAGES DISPONIBLES" , stages_list)
-    if not stages_list:
-        return jsonify({"message": "No se encontraron etapas para el proyecto especificado."}), 404
+    return stages_list
+   
+def cover_stage(stage_id: int):
+    """
+    funcion para cubrir una etapa específica según su ID.
+    """
+    stage = Stage.query.get(stage_id)
 
-    # Convertir los objetos Stage a diccionarios
-    stages_dict = [stage.to_dict() for stage in stages_list]
-
-    # Retornar la lista de etapas como JSON
-    return jsonify(stages_dict)
+    # Lógica para indicar que la etapa ya está cubierta
+    return stage
     
+def set_stage_in_progress(stage_id: int):
+    """
+    funcion para cambiar el estado de una etapa a "IN_PROGRESS".
+    """
+    stage = Stage.query.get(stage_id)
+    if stage:
+        stage.status = status_stage.IN_PROGRESS
+        db.session.commit()
+        return stage
+    return None
