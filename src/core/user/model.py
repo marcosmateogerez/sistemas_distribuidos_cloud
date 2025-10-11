@@ -10,7 +10,7 @@ class User(db.Model):
     password = db.Column(db.String(256), nullable=True)
 
     # Clave foránea para acceder al rol.
-    role_id = db.Column(db.Integer, db.ForeignKey("role.id"), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=False)
 
     # Relación entre usuario y rol.
     role = db.relationship("Role", back_populates="user")

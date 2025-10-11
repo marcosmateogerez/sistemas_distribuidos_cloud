@@ -1,5 +1,5 @@
 from src.core.database import db
-from src.core.role_permission.model import roles_permissions
+from src.core.role_permission.model import role_permission
 
 class Role(db.Model):
     """
@@ -13,4 +13,4 @@ class Role(db.Model):
     user = db.relationship("User", back_populates="role")
 
     # Relación entre rol y permiso.
-    permissions = db.relationship("Permission", secondary=roles_permissions, back_populates="roles")
+    permissions = db.relationship("Permission", secondary=role_permission, back_populates="roles")

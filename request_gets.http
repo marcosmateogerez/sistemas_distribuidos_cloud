@@ -1,8 +1,9 @@
-# GET http://localhost:5000/stages/v1/login_required_test
-# Accept: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjAxOTg3NjR9.c2qPjxTjb0upPIrNEEzIk3k3htNVQDtg_cUfrtvoYd0
+# Login para probar JWT
+GET http://localhost:5000/stages/v1/login_required_test
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjAxOTg3NjR9.c2qPjxTjb0upPIrNEEzIk3k3htNVQDtg_cUfrtvoYd0
 
-
+###
 
 # Obtener las etapas disponibles de un proyecto
 GET http://localhost:5000/stages/v1/get_available_stages/1
