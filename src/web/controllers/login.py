@@ -1,45 +1,30 @@
-from flask import Blueprint, render_template, request, jsonify
-from src.core.user.services import get_user_by_email, verify_user_password
-import jwt
-from datetime import datetime, timedelta
-from flask import current_app as app
+from src.web.services.login import validate_login_data, authenticate_user, generate_jwt_token
+from flask import Blueprint, request, jsonify
+from werkzeug.exceptions import BadRequest
 
-bp_login = Blueprint("login", __name__, url_prefix="/acceso")
-
-@bp_login.get("/")
-def login():
-    """Retorna el HTML correspondiente para el formulario de inicio de sesión."""
-    
-    return render_template("login/login.html")
+bp_login = Blueprint("login", __name__, url_prefix="/login")
 
 
-@bp_login.post("/")
+@bp_login.post("/login")
 def authenticate():
     """
-    Valida los datos recibidos para confirmar el acceso al sitio o no, y genera el token JWT.
+    Autentica al usuario y genera un token JWT.
     """
 
-    # Obtiene los datos del formulario.
-    data = request.form
-    email = data.get("email")
-    password = data.get("password")
+    # Obtiene los datos del cuerpo JSON.
+    data = request.get_json()
+    try:
+        email, password = validate_login_data(data)
+    except BadRequest as e:
+        return jsonify({"error": str(e)}), 400
 
     # Verifica si el usuario existe y si la contraseña es correcta.
-    user = get_user_by_email(email)
-    if not user or not verify_user_password(user, password):
-        return render_template("login/login.html", error="Usuario o contraseña incorrectos")
+    user = authenticate_user(email, password)
+    if not user:
+        return jsonify({"error": "Usuario o contraseña incorrectos"}), 401
 
-    # Creación del token JWT.
-    token = jwt.encode(
-        {
-            "user_id": user.id,
-            "exp": datetime.utcnow() + timedelta(hours=1)
-        },
-        app.config["SECRET_KEY"],
-        algorithm="HS256"
-    )
+    # Crea el token JWT.
+    token = generate_jwt_token(user.id)
 
-    # Almacenamiento del token JWT en la cookie.
-    response = jsonify({"token": token})
-    response.set_cookie("access_token", token, httponly=True)
-    return render_template("layout.html")
+    # Devuelve el token JWT en formato JSON.
+    return jsonify({"access_token": token}), 200

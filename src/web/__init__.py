@@ -1,6 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask
 from src import config
-from src.core.database import db, reset, init_app
+from src.core.database import db, reset
 from src.core import seed_data
 from src.web.controllers.login import bp_login
 from src.web.controllers.stage import bp as bp_stage
@@ -26,10 +26,9 @@ def create_app(env="development") -> Flask:
     app.register_blueprint(bp_login)
     app.register_blueprint(bp_stage)
     
-
     # Renderización del home.
     @app.route("/")
     def home():
-        return render_template("layout.html")
+        return "Application running succesfully ✅."
     
     return app
