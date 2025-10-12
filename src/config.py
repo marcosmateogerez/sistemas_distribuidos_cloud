@@ -16,7 +16,7 @@ class ProductionConfig(Config):
     """
     Configuración de producción.
     """
-    pass
+    SQLALCHEMY_DATABASE_URI = "postgresql://user_marcos:SOwifBUGthtEy3SjK94CvOiF4imhVcnD@dpg-d3lpnnmmcj7s73a4rtpg-a/db_cloud_h6f4"
 
 
 class DevelopmentConfig(Config):
