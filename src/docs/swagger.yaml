@@ -1,53 +1,57 @@
+swagger: "2.0"
+info:
+  title: API de Observaciones y Etapas
+  description: Documentación de la API con Swagger (Flasgger)
+  version: "1.0.0"
+
+basePath: /
+schemes:
+  - http
+
 paths:
   /login/v1/authenticate:
     post:
       summary: Autentica al usuario y genera un token JWT.
       tags:
         - Autenticación
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: "ong_originante@projectplanning.org"
-                password:
-                  type: string
-                  example: "ong_originante"
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: "ong_originante@projectplanning.org"
+              password:
+                type: string
+                example: "ong_originante"
       responses:
         200:
           description: Autenticación exitosa
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                    description: Token JWT válido por 1 hora
+          schema:
+            type: object
+            properties:
+              access_token:
+                type: string
+                description: Token JWT válido por 1 hora
         400:
           description: Datos faltantes o inválidos
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "No se enviaron datos o faltan campos obligatorios"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "No se enviaron datos o faltan campos obligatorios"
         401:
           description: Credenciales incorrectas
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario o contraseña incorrectos"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario o contraseña incorrectos"
 
   /observations/v1/add_observation/{project_id}:
     post:
@@ -60,75 +64,63 @@ paths:
           in: path
           description: ID del proyecto al que se agregará la observación
           required: true
+          type: integer
+        - name: body
+          in: body
+          required: true
           schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - description
-              properties:
-                name:
-                  type: string
-                  example: "Revisión de infraestructura"
-                description:
-                  type: string
-                  example: "Se detectó necesidad de mejora en el pavimento"
+            type: object
+            required:
+              - name
+              - description
+            properties:
+              name:
+                type: string
+                example: "Revisión de infraestructura"
+              description:
+                type: string
+                example: "Se detectó necesidad de mejora en el pavimento"
       responses:
         201:
           description: Observación agregada correctamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Observación 'Revisión de infraestructura' agregada correctamente al proyecto 12"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Observación 'Revisión de infraestructura' agregada correctamente al proyecto 12"
         400:
           description: Datos faltantes o inválidos
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "No se enviaron datos o faltan campos obligatorios"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "No se enviaron datos o faltan campos obligatorios"
         401:
           description: Usuario no autenticado / token faltante o token expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no autenticado / token faltante o token expirado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Permiso denegado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Permiso denegado"
         404:
           description: Usuario no encontrado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no encontrado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no encontrado"
 
   /observations/v1/list_observations/{project_id}:
     get:
@@ -141,63 +133,54 @@ paths:
           in: path
           description: ID del proyecto del cual se desean obtener las observaciones
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
         200:
           description: Lista de observaciones obtenida correctamente
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-                    id_project:
-                      type: integer
-                      example: 1
-                    name:
-                      type: string
-                      example: "Revisión de infraestructura"
-                    description:
-                      type: string
-                      example: "Se detectó necesidad de mejora en el pavimento"
-                    status:
-                      type: string
-                      example: "PENDING"
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                id_project:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "Revisión de infraestructura"
+                description:
+                  type: string
+                  example: "Se detectó necesidad de mejora en el pavimento"
+                status:
+                  type: string
+                  example: "PENDING"
         401:
           description: Usuario no autenticado / token faltante o token expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no autenticado / token faltante o token expirado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Permiso denegado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Permiso denegado"
         404:
           description: No se encontraron observaciones para el proyecto
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "No se encontraron observaciones para el proyecto con ID 12."
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "No se encontraron observaciones para el proyecto con ID 12."
 
   /observations/v1/upload_corrected_observation/{observation_id}:
     patch:
@@ -210,64 +193,55 @@ paths:
           in: path
           description: ID de la observación que se desea marcar como completada
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
         200:
           description: Observación marcada como completada correctamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "La observación con ID 1 ha sido marcada como completada."
-                  id:
-                    type: integer
-                    example: 1
-                  id_project:
-                    type: integer
-                    example: 1
-                  name:
-                    type: string
-                    example: "Revisión de infraestructura"
-                  description:
-                    type: string
-                    example: "Se completaron las mejoras en el pavimento"
-                  status:
-                    type: string
-                    example: "RESOLVED"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "La observación con ID 1 ha sido marcada como completada."
+              id:
+                type: integer
+                example: 1
+              id_project:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "Revisión de infraestructura"
+              description:
+                type: string
+                example: "Se completaron las mejoras en el pavimento"
+              status:
+                type: string
+                example: "RESOLVED"
         401:
           description: Usuario no autenticado / token faltante o token expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no autenticado / token faltante o token expirado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Permiso denegado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Permiso denegado"
         404:
           description: Observación no encontrada
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "No se encontró la observación con ID 12"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "No se encontró la observación con ID 12"
 
   /stages/v1/get_available_stages/{project_id}:
     get:
@@ -280,74 +254,65 @@ paths:
           in: path
           description: ID del proyecto del cual se desean obtener las etapas disponibles
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
         200:
           description: Lista de etapas obtenida correctamente
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-                    id_project:
-                      type: integer
-                      example: 1
-                    name:
-                      type: string
-                      example: "Etapa de ejemplo"
-                    description:
-                      type: string
-                      example: "Descripción de la etapa"
-                    start_date:
-                      type: string
-                      format: date-time
-                      example: "2023-10-01T00:00:00"
-                    end_date:
-                      type: string
-                      format: date-time
-                      example: "2023-12-31T23:59:59"
-                    coverage_request:
-                      type: string
-                      example: "DINERO"
-                    status:
-                      type: string
-                      example: "PENDING"
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                id_project:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: "Etapa de ejemplo"
+                description:
+                  type: string
+                  example: "Descripción de la etapa"
+                start_date:
+                  type: string
+                  format: date-time
+                  example: "2023-10-01T00:00:00"
+                end_date:
+                  type: string
+                  format: date-time
+                  example: "2023-12-31T23:59:59"
+                coverage_request:
+                  type: string
+                  example: "DINERO"
+                status:
+                  type: string
+                  example: "PENDING"
         404:
           description: No se encontraron etapas para el proyecto
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "No se encontraron etapas para el proyecto especificado."
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "No se encontraron etapas para el proyecto especificado."
         401:
           description: Usuario no autenticado / token faltante o token expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no autenticado / token faltante o token expirado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Permiso denegado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Permiso denegado"
 
   /stages/v1/cover_stage/{stage_id}:
     patch:
@@ -360,49 +325,40 @@ paths:
           in: path
           description: ID de la etapa que se desea cubrir
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
         200:
           description: Etapa cubierta exitosamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "La etapa con ID 1 ha pasado de pendiente a en ejecucion exitosamente."
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "La etapa con ID 1 ha pasado de pendiente a en ejecucion exitosamente."
         400:
           description: No se pudo cubrir la etapa
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "No se pudo cubrir la etapa con ID 1. Es posible que ya este en progreso o haya sido cubierta."
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "No se pudo cubrir la etapa con ID 1. Es posible que ya esté en progreso o haya sido cubierta."
         401:
           description: Usuario no autenticado / token faltante o token expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no autenticado / token faltante o token expirado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Permiso denegado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Permiso denegado"
 
   /stages/v1/finish_stage/{stage_id}:
     patch:
@@ -415,49 +371,40 @@ paths:
           in: path
           description: ID de la etapa que se desea finalizar
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
         200:
           description: Etapa finalizada exitosamente
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "La etapa con ID 1 ha sido finalizada exitosamente."
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "La etapa con ID 1 ha sido finalizada exitosamente."
         400:
           description: No se pudo finalizar la etapa
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "No se pudo finalizar la etapa con ID 1. Es posible que no este pendiente o que ya haya finalizado."
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "No se pudo finalizar la etapa con ID 1. Es posible que no esté pendiente o que ya haya finalizado."
         401:
           description: Usuario no autenticado / token faltante o token expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no autenticado / token faltante o token expirado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Permiso denegado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Permiso denegado"
 
   /stages/v1/create_stage:
     post:
@@ -465,107 +412,99 @@ paths:
       tags:
         - Etapas de un proyecto
       description: Crea una nueva etapa recibiendo los datos en formato JSON. Requiere token JWT y permiso `upload_stage`.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - id_project
-                - name
-                - description
-                - start_date
-                - end_date
-                - coverage_request
-              properties:
-                id_project:
-                  type: integer
-                  example: 1
-                name:
-                  type: string
-                  example: "Nueva etapa"
-                description:
-                  type: string
-                  example: "Descripción de la nueva etapa"
-                start_date:
-                  type: string
-                  format: date-time
-                  example: "2023-10-01T00:00:00"
-                end_date:
-                  type: string
-                  format: date-time
-                  example: "2023-12-31T23:59:59"
-                coverage_request:
-                  type: string
-                  example: "DINERO"
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - id_project
+              - name
+              - description
+              - start_date
+              - end_date
+              - coverage_request
+            properties:
+              id_project:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "Nueva etapa"
+              description:
+                type: string
+                example: "Descripción de la nueva etapa"
+              start_date:
+                type: string
+                format: date-time
+                example: "2023-10-01T00:00:00"
+              end_date:
+                type: string
+                format: date-time
+                example: "2023-12-31T23:59:59"
+              coverage_request:
+                type: string
+                example: "DINERO"
       responses:
         201:
           description: Etapa creada exitosamente
-          content:
-            application/json:
-              schema:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Etapa creada exitosamente."
+              stage:
                 type: object
                 properties:
-                  message:
+                  id:
+                    type: integer
+                    example: 1
+                  id_project:
+                    type: integer
+                    example: 1
+                  name:
                     type: string
-                    example: "Etapa creada exitosamente."
-                  stage:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        example: 1
-                      id_project:
-                        type: integer
-                        example: 1
-                      name:
-                        type: string
-                        example: "Nueva etapa"
-                      description:
-                        type: string
-                        example: "Descripción de la nueva etapa"
-                      start_date:
-                        type: string
-                        format: date-time
-                        example: "2023-10-01T00:00:00"
-                      end_date:
-                        type: string
-                        format: date-time
-                        example: "2023-12-31T23:59:59"
-                      coverage_request:
-                        type: string
-                        example: "DINERO"
+                    example: "Nueva etapa"
+                  description:
+                    type: string
+                    example: "Descripción de la nueva etapa"
+                  start_date:
+                    type: string
+                    format: date-time
+                    example: "2023-10-01T00:00:00"
+                  end_date:
+                    type: string
+                    format: date-time
+                    example: "2023-12-31T23:59:59"
+                  coverage_request:
+                    type: string
+                    example: "DINERO"
         400:
           description: Error al crear la etapa
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Error al crear la etapa."
-                  error:
-                    type: string
-                    example: "Descripción del error"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Error al crear la etapa."
+              error:
+                type: string
+                example: "Descripción del error"
         401:
           description: Usuario no autenticado / token faltante o token expirado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Usuario no autenticado / token faltante o token expirado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Usuario no autenticado / token faltante o token expirado"
         403:
           description: Permiso denegado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: "Permiso denegado"
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Permiso denegado"
