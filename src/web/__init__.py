@@ -8,7 +8,7 @@ from flask import Flask, redirect
 from src import config
 
 # Creación de la app principal.
-def create_app(env="production") -> Flask:
+def create_app(env="development") -> Flask:
     app: Flask = Flask(__name__)
 
     # Seteo de configuración.
