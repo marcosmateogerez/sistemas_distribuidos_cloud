@@ -276,44 +276,44 @@ paths:
           description: Lista de etapas obtenida correctamente
           schema:
             type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              id_project:
-                type: integer
-              name:
-                type: string
-              description:
-                type: string
-              start_date:
-                type: string
-                format: date-time
-              end_date:
-                type: string
-                format: date-time
-              coverage_request:
-                type: string
-              status:
-                type: string
-          example:
-            - id: 1
-              id_project: 1
-              name: "Relevamiento inicial"
-              description: "Visita al sitio y análisis de necesidades."
-              start_date: "2025-01-10T00:00:00"
-              end_date: "2025-01-20T23:59:59"
-              coverage_request: "DINERO"
-              status: "PENDING"
-            - id: 2
-              id_project: 1
-              name: "Etapa 1"
-              description: "Se requiere dinero para la adquisición de materiales."
-              start_date: "2025-10-01T00:00:00"
-              end_date: "2025-12-31T23:59:59"
-              coverage_request: "MATERIALES"
-              status: "PENDING"
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                id_project:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+                start_date:
+                  type: string
+                  format: date-time
+                end_date:
+                  type: string
+                  format: date-time
+                coverage_request:
+                  type: string
+                status:
+                  type: string
+            example:
+              - id: 1
+                id_project: 1
+                name: "Relevamiento inicial"
+                description: "Visita al sitio y análisis de necesidades."
+                start_date: "2025-01-10T00:00:00"
+                end_date: "2025-01-20T23:59:59"
+                coverage_request: "DINERO"
+                status: "PENDING"
+              - id: 2
+                id_project: 1
+                name: "Etapa 1"
+                description: "Se requiere dinero para la adquisición de materiales."
+                start_date: "2025-10-01T00:00:00"
+                end_date: "2025-12-31T23:59:59"
+                coverage_request: "MATERIALES"
+                status: "PENDING"
         404:
           description: No se encontraron etapas para el proyecto
           schema:
