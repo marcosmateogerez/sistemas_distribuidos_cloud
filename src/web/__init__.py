@@ -2,6 +2,7 @@ from src.web.controllers.observation import bp_observation
 from src.web.controllers.stage import bp as bp_stage
 from src.web.controllers.login import bp_login
 from src.core.database import db, reset
+from src.docs.swagger_config import init_swagger
 from src.core import seed_data
 from flask import Flask
 from src import config
@@ -22,6 +23,9 @@ def create_app(env="development") -> Flask:
     @app.cli.command(name="reset-db")
     def reset_db():
         reset(app)
+        
+    # Inicialización de Swagger.
+    init_swagger(app)
     
     # Registro de blueprints.
     app.register_blueprint(bp_login)

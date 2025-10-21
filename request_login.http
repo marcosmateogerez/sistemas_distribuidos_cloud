@@ -3,6 +3,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "email": "ong_originante@projectplanning.org",
-    "password": "ong_originante"
+    "email": "ong_colaborativa@projectplanning.org",
+    "password": "ong_colaborativa"
 }

@@ -47,6 +47,7 @@ def create_stage(data: dict):
     """
     funcion para crear una nueva etapa.
     """
+    #DTO_tomodel, se llama a esa función y ella se encarga de formatear los datos
     coverage_request = CoverageRequest[data["coverage_request"]]
 
     new_stage = Stage(

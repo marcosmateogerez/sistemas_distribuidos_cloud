@@ -51,6 +51,8 @@ def create_stage():
     """
     Endpoint para crear una nueva etapa recibiendo los datos en formato JSON.
     """
+    
+    #Poner el try dentro del service
     try:
         data = request.get_json()
         new_stage = stage_service.create_stage(data)

@@ -1,18 +1,9 @@
-# Obtener las etapas disponibles de un proyecto
-GET http://localhost:5000/stages/v1/get_available_stages/1
-Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjAxOTg3NjR9.c2qPjxTjb0upPIrNEEzIk3k3htNVQDtg_cUfrtvoYd0
-
-###
 
 # Cubrir una etapa específica por su ID
 GET http://localhost:5000/stages/v1/cover_stage/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjAxOTg3NjR9.c2qPjxTjb0upPIrNEEzIk3k3htNVQDtg_cUfrtvoYd0
-
-###
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjAyMjgyMzJ9.wWUfiCroxjgJRy3KTv5wR6HnHcFxS43vsx2XbZApeGs
 # Finalizar una etapa específica por su ID
-GET http://localhost:5000/stages/v1/finish_stage/1
-Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjAxOTg3NjR9.c2qPjxTjb0upPIrNEEzIk3k3htNVQDtg_cUfrtvoYd0
+# GET http://localhost:5000/stages/v1/finish_stage/1
+# Accept: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjAyMjgyMzJ9.wWUfiCroxjgJRy3KTv5wR6HnHcFxS43vsx2XbZApeGs
