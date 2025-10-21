@@ -13,12 +13,12 @@ def validate_observation_data(data):
     return data["name"], data["description"]
 
 
-def get_observations_by_project(project_id: int) -> List[Dict]:
+def get_pending_observations_by_project(project_id: int) -> List[Dict]:
     """
-    Devuelve todas las observaciones de un proyecto, convertidas a diccionarios.
+    Devuelve las observaciones pendientes de un proyecto, convertidas a diccionarios.
     """
     # Busca las observaciones en la base de datos.
-    observations = observation.get_observations_by_project(project_id=project_id)
+    observations = observation.get_pending_observations_by_project(project_id=project_id)
 
     # Si no existen observaciones devuelve una lista vacía.
     if not observations:
