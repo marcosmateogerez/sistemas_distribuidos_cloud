@@ -15,6 +15,7 @@ info:
 basePath: /
 schemes:
   - http
+  - https
 
 paths:
   /login/v1/authenticate:
