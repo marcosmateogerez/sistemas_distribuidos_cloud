@@ -4,7 +4,7 @@ from src.web.controllers.login import bp_login
 from src.core.database import db, reset
 from src.docs.swagger_config import init_swagger
 from src.core import seed_data
-from flask import Flask
+from flask import Flask, redirect
 from src import config
 
 # Creación de la app principal.
@@ -35,6 +35,6 @@ def create_app(env="development") -> Flask:
     # Renderización del home.
     @app.route("/")
     def home():
-        return "Application running succesfully ✅."
+        return redirect("/apidocs")
     
     return app
