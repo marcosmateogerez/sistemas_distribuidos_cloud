@@ -2,8 +2,9 @@ from src.web.controllers.observation import bp_observation
 from src.web.controllers.stage import bp as bp_stage
 from src.web.controllers.login import bp_login
 from src.core.database import db, reset
+from src.docs.swagger_config import init_swagger
 from src.core import seed_data
-from flask import Flask
+from flask import Flask, redirect
 from src import config
 
 # Creación de la app principal.
@@ -22,6 +23,9 @@ def create_app(env="production") -> Flask:
     @app.cli.command(name="reset-db")
     def reset_db():
         reset(app)
+        
+    # Inicialización de Swagger.
+    init_swagger(app)
     
     # Registro de blueprints.
     app.register_blueprint(bp_login)
@@ -31,6 +35,6 @@ def create_app(env="production") -> Flask:
     # Renderización del home.
     @app.route("/")
     def home():
-        return "Application running succesfully ✅."
+        return redirect("/apidocs")
     
     return app

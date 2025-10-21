@@ -1,6 +1,6 @@
 from src.core.observation.model import Observation, Status
-from src.core.database import db
 from typing import List, Optional
+from src.core.database import db
 
 def create_observation(project_id: int, name: str, description: str = "") -> Observation:
     """
@@ -17,11 +17,11 @@ def create_observation(project_id: int, name: str, description: str = "") -> Obs
     return observation
 
 
-def get_observations_by_project(project_id: int) -> List[Observation]:
+def get_pending_observations_by_project(project_id: int) -> List[Observation]:
     """
-    Devuelve todas las observaciones asociadas a un proyecto.
+    Devuelve todas las observaciones con estado PENDING asociadas a un proyecto.
     """
-    return Observation.query.filter_by(id_project=project_id).all()
+    return Observation.query.filter_by(id_project=project_id, status=Status.PENDING).all()
 
 
 def mark_observation_as_resolved(observation_id: int) -> Optional[Observation]:

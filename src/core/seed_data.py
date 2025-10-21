@@ -1,4 +1,5 @@
 from src.core.stage.model import Stage, CoverageRequest, StatusStage
+from src.core.observation.model import Observation, Status
 from werkzeug.security import generate_password_hash
 from src.core.permission.model import Permission
 from src.core.role.model import Role
@@ -92,41 +93,27 @@ def run():
     db.session.add(user_ong_colaborativa)
     db.session.add(user_consejo_directivo)
 
-    # Crear stages de ejemplo.
-    stage_1 = Stage(
+    # Crear stage y observation de ejemplo.
+    stage = Stage(
         id_project=1,
-        name="Etapa de ejemplo",
-        description="Esta es una etapa de ejemplo para un proyecto.",
-        start_date="2023-10-01 00:00:00",
-        end_date="2023-12-31 23:59:59",
+        name="Relevamiento inicial",
+        description="Visita al sitio y análisis de necesidades.",
+        start_date="2025-01-10 00:00:00",
+        end_date="2025-01-20 23:59:59",
         coverage_request=CoverageRequest.DINERO,
         status=StatusStage.PENDING
     )
-    
-    stage_2 = Stage(
+
+    observation = Observation(
         id_project=1,
-        name="Etapa de ejemplo",
-        description="Esta es una etapa de ejemplo para un proyecto 2.",
-        start_date="2023-10-01 00:00:00",
-        end_date="2023-12-31 23:59:59",
-        coverage_request=CoverageRequest.MATERIALES,
-        status=StatusStage.PENDING
+        name="Revisar planos",
+        description="Verificar planos enviados por el cliente.",
+        status=Status.PENDING
     )
     
-    stage_3 = Stage(
-        id_project=2,
-        name="Etapa de ejemplo",
-        description="Esta es una etapa de ejemplo para un proyecto 3.",
-        start_date="2023-10-01 00:00:00",
-        end_date="2023-12-31 23:59:59",
-        coverage_request=CoverageRequest.MANO_DE_OBRA,
-        status=StatusStage.PENDING
-    )
-    
-    # Agregar stages y observaciones a la sesión.
-    db.session.add(stage_1)
-    db.session.add(stage_2)
-    db.session.add(stage_3)
+    # Agregar stage y observation a la sesión.
+    db.session.add(stage)
+    db.session.add(observation)
     
     # Almacenamiento de las tablas en la base de datos.
     db.session.commit()

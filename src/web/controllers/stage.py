@@ -18,7 +18,7 @@ def get_available_stages(project_id: int):
     return jsonify(stages_list), 200
 
 
-@bp.get("/v1/cover_stage/<int:stage_id>")
+@bp.patch("/v1/cover_stage/<int:stage_id>")
 @token_required
 @requires_permission("subscribe_to_stage")
 def cover_stage_by_id(stage_id: int):
@@ -31,7 +31,7 @@ def cover_stage_by_id(stage_id: int):
     return jsonify({"message": f"No se pudo cubrir la etapa con ID {stage_id}. Es posible que ya este en progreso o haya sido cubierta."}), 400
 
 
-@bp.get("/v1/finish_stage/<int:stage_id>")
+@bp.patch("/v1/finish_stage/<int:stage_id>")
 @token_required
 @requires_permission("complete_stage")
 def finish_stage_by_id(stage_id: int):
