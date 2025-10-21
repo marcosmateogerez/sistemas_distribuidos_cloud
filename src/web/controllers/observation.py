@@ -46,7 +46,7 @@ def list_observations(project_id: int):
     return jsonify(observations), 200
 
 
-@bp_observation.put("/v1/upload_corrected_observation/<int:observation_id>")
+@bp_observation.patch("/v1/upload_corrected_observation/<int:observation_id>")
 @token_required
 @requires_permission("upload_corrected_observation")
 def upload_corrected_observation(observation_id: int):

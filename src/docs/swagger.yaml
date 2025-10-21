@@ -52,7 +52,7 @@ paths:
   /observations/v1/add_observation/{project_id}:
     post:
       tags:
-        - Observations
+        - Observaciones
       summary: Agregar una observación a un proyecto
       description: Crea una nueva observación para un proyecto específico. Requiere token JWT y permiso `add_observation`.
       parameters:
@@ -133,7 +133,7 @@ paths:
   /observations/v1/list_observations/{project_id}:
     get:
       tags:
-        - Observations
+        - Observaciones
       summary: Listar observaciones de un proyecto
       description: Obtiene todas las observaciones asociadas a un proyecto. Requiere token JWT y permiso `list_observations`.
       parameters:
@@ -200,9 +200,9 @@ paths:
                     example: "No se encontraron observaciones para el proyecto con ID 12."
 
   /observations/v1/upload_corrected_observation/{observation_id}:
-    put:
+    patch:
       tags:
-        - Observations
+        - Observaciones
       summary: Marcar observación como completada
       description: Marca una observación como completada (estado `RESOLVED`) a partir de su ID. Requiere token JWT y permiso `upload_corrected_observation`.
       parameters:
@@ -268,11 +268,12 @@ paths:
                   message:
                     type: string
                     example: "No se encontró la observación con ID 12"
+
   /stages/v1/get_available_stages/{project_id}:
     get:
       summary: Obtener etapas disponibles de un proyecto
       tags:
-        - Stages
+        - Etapas de un proyecto
       description: Obtiene las etapas disponibles de un proyecto específico. Requiere token JWT y permiso `list_available_stages`.
       parameters:
         - name: project_id
@@ -349,10 +350,10 @@ paths:
                     example: "Permiso denegado"
 
   /stages/v1/cover_stage/{stage_id}:
-    get:
+    patch:
       summary: Cubrir una etapa específica
       tags:
-        - Stages
+        - Etapas de un proyecto
       description: Cambia el estado de una etapa a "en progreso". Requiere token JWT y permiso `subscribe_to_stage`.
       parameters:
         - name: stage_id
@@ -404,10 +405,10 @@ paths:
                     example: "Permiso denegado"
 
   /stages/v1/finish_stage/{stage_id}:
-    get:
+    patch:
       summary: Finalizar una etapa específica
       tags:
-        - Stages
+        - Etapas de un proyecto
       description: Cambia el estado de una etapa a "finalizada". Requiere token JWT y permiso `complete_stage`.
       parameters:
         - name: stage_id
@@ -462,7 +463,7 @@ paths:
     post:
       summary: Crear una nueva etapa
       tags:
-        - Stages
+        - Etapas de un proyecto
       description: Crea una nueva etapa recibiendo los datos en formato JSON. Requiere token JWT y permiso `upload_stage`.
       requestBody:
         required: true
