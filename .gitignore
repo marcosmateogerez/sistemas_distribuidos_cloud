@@ -1,9 +1,31 @@
-.env
-*__pycache__/
-*.pyc
+# Entornos virtuales y configuraciones locales
+venv/
+.env/
+.venv/
 .vscode/
+.idea/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.cpython-*
+
+# Cachés
 .cache/
 *.cache
-cache/
 */cache/
-.cpython-313.pyc
+
+# Archivos temporales y logs
+*.log
+*.tmp
+.DS_Store
+
+# Cobertura y pruebas
+.coverage
+pytest_cache/
+.tox/
+
+# Archivos de dependencias locales
+poetry.lock
+Pipfile.lock
