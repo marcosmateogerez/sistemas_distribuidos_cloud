@@ -1,0 +1,40 @@
+
+### Create Stages Batch
+POST http://127.0.0.1:5001/stages/v1/create_stages_batch
+Content-Type: application/json
+
+{
+    "stages": [
+        {
+            "id_project": 1,
+            "name": "Etapa 1",
+            "description": "Descripción de la etapa 1",
+            "start_date": "2025-10-15T09:00:00",
+            "end_date": "2025-11-01T18:00:00",
+            "coverage_request": "MATERIALES",
+            "requires_contribution": true
+        },
+        {
+            "id_project": 1,
+            "name": "Etapa 2",
+            "description": "Descripción de la etapa 2",
+            "start_date": "2025-11-02T09:00:00",
+            "end_date": "2025-11-20T18:00:00",
+            "coverage_request": "MATERIALES",
+            "requires_contribution": true
+        }
+    ]
+}
+
+
+
+
+### wwww
+POST http://127.0.0.1:5001/login/v1/authenticate
+Content-Type: application/json
+
+{
+    "email": "ong_originante@projectplanning.org",
+    "password": "ong_originante"
+}
+

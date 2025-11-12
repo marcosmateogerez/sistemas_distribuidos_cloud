@@ -58,3 +58,34 @@ def create_stage():
             return jsonify({"message": "Etapa creada exitosamente.", "stage": new_stage.to_dict()}), 201
     except Exception as e:
         return jsonify({"message": "Error al crear la etapa.", "error": str(e)}), 400
+    
+    
+@bp.post("/v1/create_stages_batch")
+@token_required
+@requires_permission("upload_stage")
+def create_stages_batch():
+    """
+    Endpoint para crear múltiples etapas de una vez.
+    Recibe un array de stages en formato JSON.
+    """
+    
+    try:
+        data = request.get_json()
+        stages_data = data.get("stages", [])
+        
+        if not stages_data:
+            return jsonify({"error": "Se requiere un array 'stages'"}), 400
+        
+        created_stages = []
+        for stage_data in stages_data:
+            new_stage = stage_service.create_stage(stage_data)
+            if new_stage:
+                created_stages.append(new_stage.to_dict())
+        
+        return jsonify({
+            "message": f"{len(created_stages)} etapas creadas exitosamente.",
+            "stages": created_stages
+        }), 201
+        
+    except Exception as e:
+        return jsonify({"error": f"Error al crear etapas: {str(e)}"}), 400
