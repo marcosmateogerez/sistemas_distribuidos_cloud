@@ -51,3 +51,10 @@ def create_stage(new_stage: Stage):
     db.session.add(new_stage)
     db.session.commit()
     return new_stage or None
+
+def get_all_stages_pending():
+    """
+    funcion para obtener todas las etapas pendientes.
+    """
+    stages_list = Stage.query.filter_by(status=StatusStage.PENDING).all()
+    return stages_list

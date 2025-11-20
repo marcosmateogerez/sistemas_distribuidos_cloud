@@ -89,3 +89,20 @@ def create_stages_batch():
         
     except Exception as e:
         return jsonify({"error": f"Error al crear etapas: {str(e)}"}), 400
+
+
+@bp.get("/v1/get_all_available_stages")
+def get_all_available_stages():
+    """
+    Obtiene todas las etapas pendientes de todos los proyectos.
+    (1) No recibe nada.
+    (2) Devuelve:
+        1. 200 - lista de etapas de todos los proyectos.
+        2. 401 - error: sesión expirada o inválida.
+        3. 403 - error: el usuario no tiene permisos para acceder.
+        4. 404 - message: no hay etapas disponibles.
+    """
+    response = stage_service.get_all_stages_pending()
+    if not response:
+        return jsonify({"message": "No hay etapas disponibles."}), 404
+    return jsonify(response), 200

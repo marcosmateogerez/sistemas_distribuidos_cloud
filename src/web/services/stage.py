@@ -62,3 +62,16 @@ def create_stage(data: dict):
     if new_stage:
         return new_stage
     return None
+
+
+def get_all_stages_pending():
+    """
+    funcion para obtener todas las etapas pendientes de todos los proyectos.
+    """
+    stages_list = stage_functions.get_all_stages_pending()
+    
+    # Convertir los objetos Stage a diccionarios.
+    stages_dict = [stage.to_dict() for stage in stages_list]
+
+    # Retornar la lista de etapas como JSON.
+    return stages_dict

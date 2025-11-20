@@ -1,7 +1,8 @@
 
 ### Create Stages Batch
-POST http://127.0.0.1:5001/stages/v1/create_stages_batch
+POST http://127.0.0.1:5000/stages/v1/create_stages_batch
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjM2Njk4NDh9.vKXRTn5f1y53ti-SMjNvMUJ5_KE998bYZ-oxyYDBkkc
 
 {
     "stages": [
@@ -30,11 +31,24 @@ Content-Type: application/json
 
 
 ### wwww
-POST http://127.0.0.1:5001/login/v1/authenticate
+POST http://127.0.0.1:5000/login/v1/authenticate
 Content-Type: application/json
 
 {
-    "email": "ong_originante@projectplanning.org",
-    "password": "ong_originante"
+    "email": "ong_colaborativa@projectplanning.org",
+    "password": "ong_colaborativa"
 }
 
+
+
+### Get All Available Stages
+GET http://127.0.0.1:5000/stages/v1/get_all_available_stages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjM2Njk4NDh9.vKXRTn5f1y53ti-SMjNvMUJ5_KE998bYZ-oxyYDBkkc
+
+
+
+### cover_stages
+PATCH http://127.0.0.1:5000/stages/v1/cover_stage/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2NzAxNTN9.8tDnPG01LGfRW1GXIh7Abghfqk3B3hUBxfg4NIGIVVk
