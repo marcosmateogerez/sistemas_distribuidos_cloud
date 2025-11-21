@@ -58,3 +58,12 @@ def get_all_stages_pending():
     """
     stages_list = Stage.query.filter_by(status=StatusStage.PENDING).all()
     return stages_list
+
+
+def get_in_progress_stages_by_user(user_id: int):
+    """
+    Retorna todas las etapas que están en progreso (IN_PROGRESS)
+    asignadas a un usuario específico.
+    """
+    stages = Stage.query.filter_by(user_id=user_id, status=StatusStage.IN_PROGRESS).all()
+    return stages

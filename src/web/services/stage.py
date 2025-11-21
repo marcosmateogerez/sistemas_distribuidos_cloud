@@ -56,6 +56,7 @@ def create_stage(data: dict):
         description=data.get("description"),
         start_date=data["start_date"],
         end_date=data.get("end_date"),
+        user_id=data["user_id"],
         coverage_request=coverage_request
     )
     stage_functions.create_stage(new_stage)
@@ -75,3 +76,11 @@ def get_all_stages_pending():
 
     # Retornar la lista de etapas como JSON.
     return stages_dict
+
+
+def get_in_progress_stages_for_user(user_id: int):
+    """
+    Obtiene las etapas en progreso del usuario actual.
+    """
+    stages = stage_functions.get_in_progress_stages_by_user(user_id)
+    return [stage.to_dict() for stage in stages]

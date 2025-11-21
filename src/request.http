@@ -2,7 +2,7 @@
 ### Create Stages Batch
 POST http://127.0.0.1:5000/stages/v1/create_stages_batch
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjM2Njk4NDh9.vKXRTn5f1y53ti-SMjNvMUJ5_KE998bYZ-oxyYDBkkc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjM2OTU2MDR9.1rmJVbJxHl8kXjM2fx6a2wnN6vx4s6xYGGtMXUHlvPg
 
 {
     "stages": [
@@ -13,7 +13,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJle
             "start_date": "2025-10-15T09:00:00",
             "end_date": "2025-11-01T18:00:00",
             "coverage_request": "MATERIALES",
-            "requires_contribution": true
+            "requires_contribution": true,
+            "user_id": 2
         },
         {
             "id_project": 1,
@@ -22,7 +23,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJle
             "start_date": "2025-11-02T09:00:00",
             "end_date": "2025-11-20T18:00:00",
             "coverage_request": "MATERIALES",
-            "requires_contribution": true
+            "requires_contribution": true,
+            "user_id": 2
         }
     ]
 }
@@ -35,7 +37,7 @@ POST http://127.0.0.1:5000/login/v1/authenticate
 Content-Type: application/json
 
 {
-    "email": "ong_colaborativa@projectplanning.org",
+       "email": "ong_colaborativa@projectplanning.org",
     "password": "ong_colaborativa"
 }
 
@@ -44,11 +46,20 @@ Content-Type: application/json
 ### Get All Available Stages
 GET http://127.0.0.1:5000/stages/v1/get_all_available_stages
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjM2Njk4NDh9.vKXRTn5f1y53ti-SMjNvMUJ5_KE998bYZ-oxyYDBkkc
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2OTUyMTB9.UMbz6pp7blFrb4Gl5vhH934o8MKih8MCW0KaeBcC_sY
 
 
 ### cover_stages
 PATCH http://127.0.0.1:5000/stages/v1/cover_stage/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2NzAxNTN9.8tDnPG01LGfRW1GXIh7Abghfqk3B3hUBxfg4NIGIVVk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2OTU3MDd9.URgQbGlH94P1Az-cF-CgMdvb3ELgor4r78nBe2IctSw
+
+
+### Get In-Progress Stages for User
+GET http://127.0.0.1:5000/stages/v1/get_in_progress_stages
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2OTU3MDd9.URgQbGlH94P1Az-cF-CgMdvb3ELgor4r78nBe2IctSw
+
+{
+    "user_id": 2
+}

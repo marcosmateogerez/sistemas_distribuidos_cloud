@@ -92,6 +92,8 @@ def create_stages_batch():
 
 
 @bp.get("/v1/get_all_available_stages")
+@token_required
+@requires_permission("list_available_stages")
 def get_all_available_stages():
     """
     Obtiene todas las etapas pendientes de todos los proyectos.
@@ -106,3 +108,25 @@ def get_all_available_stages():
     if not response:
         return jsonify({"message": "No hay etapas disponibles."}), 404
     return jsonify(response), 200
+
+
+@bp.get("/v1/get_in_progress_stages")
+@token_required
+@requires_permission("list_available_stages")
+def get_in_progress_stages():
+    """
+    Devuelve las etapas en estado "IN_PROGRESS" del usuario autenticado.
+    (1) No recibe nada.
+    (2) Devuelve:
+        1. 200 - listado con las etapas del usuario autenticado en estado "IN_PROGRESS".
+        2. 401 - error: sesión expirada o inválida.
+        3. 403 - error: el usuario no tiene permisos para acceder.
+        4. 500 - error: mensaje de error específico.
+    """
+    try:
+        data = request.get_json()
+        user_id = data.get("user_id")
+        stages = stage_service.get_in_progress_stages_for_user(user_id)
+        return jsonify(stages), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
