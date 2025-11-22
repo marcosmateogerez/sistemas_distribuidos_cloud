@@ -1,6 +1,6 @@
 
 ### Create Stages Batch
-POST http://127.0.0.1:5000/stages/v1/create_stages_batch
+POST http://127.0.0.1:5001/stages/v1/create_stages_batch
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjM2OTU2MDR9.1rmJVbJxHl8kXjM2fx6a2wnN6vx4s6xYGGtMXUHlvPg
 
@@ -33,33 +33,32 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJle
 
 
 ### wwww
-POST http://127.0.0.1:5000/login/v1/authenticate
+POST http://127.0.0.1:5001/login/v1/authenticate
 Content-Type: application/json
 
 {
-       "email": "ong_colaborativa@projectplanning.org",
+    "email": "ong_colaborativa@projectplanning.org",
     "password": "ong_colaborativa"
 }
 
 
 
 ### Get All Available Stages
-GET http://127.0.0.1:5000/stages/v1/get_all_available_stages
+GET http://127.0.0.1:5001/stages/v1/get_all_available_stages
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2OTUyMTB9.UMbz6pp7blFrb4Gl5vhH934o8MKih8MCW0KaeBcC_sY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM3NzE4NjN9.vxNXqY9EKIpkdpBFm933f2SJwbMhQ9LypfxFX9hbO6Q
 
 
 ### cover_stages
-PATCH http://127.0.0.1:5000/stages/v1/cover_stage/1
+PATCH http://127.0.0.1:5001/stages/v1/cover_stage/3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2OTU3MDd9.URgQbGlH94P1Az-cF-CgMdvb3ELgor4r78nBe2IctSw
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM3NzE4NjN9.vxNXqY9EKIpkdpBFm933f2SJwbMhQ9LypfxFX9hbO6Q
 
 ### Get In-Progress Stages for User
-GET http://127.0.0.1:5000/stages/v1/get_in_progress_stages
+POST http://127.0.0.1:5001/stages/v1/get_in_progress_stages
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM2OTU3MDd9.URgQbGlH94P1Az-cF-CgMdvb3ELgor4r78nBe2IctSw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJleHAiOjE3NjM3NzI2MDh9.UkbWaKK9ibhuAXEYYvnjjv0GCUxS1B8qjzc-H1IiPS4
 
 {
-    "user_id": 2
+    "user_id": 1
 }

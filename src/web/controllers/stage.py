@@ -25,7 +25,9 @@ def cover_stage_by_id(stage_id: int):
     """
     Endpoint para cubrir una etapa específica según su ID.
     """
-    result = stage_service.cover_stage(stage_id)
+    data = request.get_json()
+    user_id = data.get("user_id")
+    result = stage_service.cover_stage(user_id, stage_id)
     if result:
         return jsonify({"message": f"La etapa con ID {stage_id} ha pasado de pendiente a en ejecucion exitosamente."}), 200
     return jsonify({"message": f"No se pudo cubrir la etapa con ID {stage_id}. Es posible que ya este en progreso o haya sido cubierta."}), 400
@@ -110,7 +112,7 @@ def get_all_available_stages():
     return jsonify(response), 200
 
 
-@bp.get("/v1/get_in_progress_stages")
+@bp.post("/v1/get_in_progress_stages")
 @token_required
 @requires_permission("list_available_stages")
 def get_in_progress_stages():

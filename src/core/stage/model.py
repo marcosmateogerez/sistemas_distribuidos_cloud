@@ -31,14 +31,14 @@ class Stage(db.Model):
     end_date = db.Column(db.DateTime, nullable=True)
     coverage_request = db.Column(Enum(CoverageRequest), nullable=False)
     status = db.Column(Enum(StatusStage), default=StatusStage.PENDING, nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=True)
     
     def to_dict(self):
            return {
                 "id": self.id,
                 "id_project": self.id_project,
                 "name": self.name,
-                "user_id": self.user_id,
+                "user_id": self.user_id if self.user_id else None,
                 "description": self.description,
                 "start_date": self.start_date.isoformat() if self.start_date else None,
                 "end_date": self.end_date.isoformat() if self.end_date else None,
