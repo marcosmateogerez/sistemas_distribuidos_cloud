@@ -1,10 +1,10 @@
 from src.web.controllers.observation import bp_observation
 from src.web.controllers.stage import bp as bp_stage
+from src.docs.swagger_config import init_swagger
 from src.web.controllers.login import bp_login
 from src.core.database import db, reset
-from src.docs.swagger_config import init_swagger
-from src.core import seed_data
 from flask import Flask, redirect
+from src.core import seed_data
 from src import config
 
 # Creación de la app principal.

@@ -93,28 +93,6 @@ def run():
     db.session.add(user_ong_colaborativa)
     db.session.add(user_consejo_directivo)
 
-    # # Crear stage y observation de ejemplo.
-    # stage = Stage(
-    #     id_project=1,
-    #     name="Relevamiento inicial",
-    #     description="Visita al sitio y análisis de necesidades.",
-    #     start_date="2025-01-10 00:00:00",
-    #     end_date="2025-01-20 23:59:59",
-    #     coverage_request=CoverageRequest.DINERO,
-    #     status=StatusStage.PENDING
-    # )
-
-    # observation = Observation(
-    #     id_project=1,
-    #     name="Revisar planos",
-    #     description="Verificar planos enviados por el cliente.",
-    #     status=Status.PENDING
-    # )
-    
-    # # Agregar stage y observation a la sesión.
-    # db.session.add(stage)
-    # db.session.add(observation)
-    
     # Almacenamiento de las tablas en la base de datos.
     db.session.commit()
     print("Tablas creadas correctamente ✅.")
